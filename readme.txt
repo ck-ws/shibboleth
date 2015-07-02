@@ -1,5 +1,5 @@
 === Shibboleth ===
-Contributors: willnorris, mitchoyoshitaka
+Contributors: willnorris, mitchoyoshitaka, cjbrabec
 Tags: shibboleth, authentication, login, saml
 Requires at least: 3.3
 Tested up to: 4.5
