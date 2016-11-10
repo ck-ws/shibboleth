@@ -1,8 +1,32 @@
-Shibboleth
-==========
+# Shibboleth 2 for WordPress
 
-This is the official development repository for the [WordPress Shibboleth plugin](http://wordpress.org/plugins/shibboleth), originally by [Will Norris](https://github.com/willnorris).
+This is a maintained fork of the [WordPress Shibboleth plugin](http://wordpress.org/plugins/shibboleth), originally by [Will Norris](https://github.com/willnorris) and [Michael 芳貴 Erlewine](https://github.com/mitcho), with contributions from numerous people.
 
-Read [readme.txt](https://github.com/mitcho/shibboleth/blob/master/readme.txt) for usage information.
+Read [readme.txt](readme.txt) for usage information.
 
-The project accepts contributions via pull request! From time to time mitcho will commit changes from this git repository back into the WordPress.org SVN repository, in particular for versioned releases.
+The project accepts contributions via pull request!
+
+## Installation
+
+### GitHub Updater
+This plugin is compatible with [GitHub Updater](https://github.com/afragen/github-updater).
+
+Install it by copying the GitHub URL and pasting it under Settings -> GitHub Updater -> Install plugin.
+
+### Manual
+1. Download the latest ZIP using "Clone or download" -> Downloap ZIP
+2. Unzip it into `wp-content/plugins/shibboleth`
+
+### Git
+Clone into `wp-content/plugins/shibboleth`:
+
+````
+git clone https://github.com/ck-ws/shibboleth wp-content/plugins/shibboleth
+````
+
+and enable it in the Plugins section of WP Admin.
+
+### WordPress Plugin Directory
+You can install mitcho's version from the Plugin Directory: https://wordpress.org/plugins/shibboleth/
+
+Please note that this version differs a lot from the one in this repository!

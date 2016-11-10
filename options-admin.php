@@ -288,55 +288,66 @@ if ( apply_filters('shibboleth_role_mapping_override',false) === false ):
 
 			<p><?php _e('<strong>Current Limitations:</strong> While WordPress supports users having'
 				. ' multiple roles, the Shibboleth plugin will only place the user in the highest ranking'
-				. ' role.  Only a single header/value pair is supported for each user role.  This may be'
-				. ' expanded in the future to support multiple header/value pairs or regular expression'
-				. ' values.  In the meantime, you can use the <em>shibboleth_roles</em> and'
-				. ' <em>shibboleth_user_role</em> WordPress filters to provide your own logic for assigning'
-				. ' user roles.', 'shibboleth'); ?></p>
+				. ' role. You can use the <em>shibboleth_roles</em> and <em>shibboleth_user_role</em>'
+				. ' WordPress filters to provide your own logic for assigning user roles.', 'shibboleth'); ?></p>
 
 			<style type="text/css">
-				#role_mappings { padding: 0; }
-				#role_mappings thead th { padding: 5px 10px; }
-				#role_mappings td, #role_mappings th { border-bottom: 0px; }
+				.role_mapping th, .role_mapping td { padding: 5px 0; vertical-align: top; }
 			</style>
+			<script type="text/javascript">
+				// dynamically add/remove header value fields
+				jQuery('body').on('click', '.shib-btn-remove', function(e) {
+					var btn = jQuery(this);
+					var el = btn.parent();
+					if(el.siblings().length > 0) el.remove();
+					else el.children('input,select,textarea').val('');
+				});
+				jQuery('body').on('click', '.shib-btn-add', function(e) {
+					var btn = jQuery(this);
+					var el = btn.parent();
+					var newEl = el.clone();
+					newEl.children('input,select,textarea').removeAttr('id').val('');
+					el.after(newEl);
+				});
+			</script>
 
-			<table class="form-table optiontable editform" cellspacing="2" cellpadding="5" width="100%">
+			<table class="form-table">
 
 				<tr>
 					<th scope="row"><?php _e('Role Mappings', 'shibboleth') ?></th>
-					<td id="role_mappings">
-						<table id="">
-						<col width="10%"></col>
-						<col></col>
-						<col></col>
-						<thead>
-							<tr>
-								<th></th>
-								<th scope="column"><?php _e('Header Name', 'shibboleth') ?></th>
-								<th scope="column"><?php _e('Header Value', 'shibboleth') ?></th>
-							</tr>
-						</thead>
-						<tbody>
+					<th scope="column"><?php _e('Header Name', 'shibboleth') ?></th>
+					<th scope="column"><?php _e('Header Value', 'shibboleth') ?></th>
+				</tr>
 <?php
 
 					foreach ($wp_roles->role_names as $key => $name) {
-						echo'
-						<tr valign="top">
-							<th scope="row">' . __($name) . '</th>
-							<td><input type="text" id="role_'.$key.'_header" name="shibboleth_roles['.$key.'][header]" value="' . @$shib_roles[$key]['header'] . '" style="width: 100%" /></td>
-							<td><input type="text" id="role_'.$key.'_value" name="shibboleth_roles['.$key.'][value]" value="' . @$shib_roles[$key]['value'] . '" style="width: 100%" /></td>
-						</tr>';
+						echo '
+				<tr class="role_mapping">
+					<td scope="row">' . __($name) . '</td>
+					<td><input type="text" id="role_'.$key.'_header" name="shibboleth_roles['.$key.'][header]" value="' . esc_html(@$shib_roles[$key]['header']) . '" /></td>
+					<td>';
+						$i = 0;
+						if(is_array($shib_roles[$key]['value']))
+						{
+							foreach (@$shib_roles[$key]['value'] as $val) {
+								if(!empty($val) || $i == 0) echo '
+						<div><input type="text" id="role_'.$key.'_value" name="shibboleth_roles['.$key.'][value][]" value="'.esc_html($val).'" /><a class="button shib-btn-remove">−</a><a class="button shib-btn-add">+</a></div>';
+							$i++;
+							}
+						}
+						else
+						{
+							echo '
+						<div><input type="text" id="role_'.$key.'_value" name="shibboleth_roles['.$key.'][value][]" value="' . esc_html(@$shib_roles[$key]['value']) . '" /><a class="button shib-btn-remove">−</a><a class="button shib-btn-add">+</a></div>';
+						}
+						echo '
+					</td>
+				</tr>';
 					}
 ?>
-
-						</tbody>
-						</table>
-					</td>
-				</tr>
-
 				<tr>
 					<th scope="row"><?php _e('Default Role', 'shibboleth') ?></th>
-					<td>
+					<td colspan="2">
 						<select id="default_role" name="shibboleth_roles[default]">
 						<option value=""><?php _e('(none)') ?></option>
 <?php
@@ -355,7 +366,7 @@ if ( apply_filters('shibboleth_role_mapping_override',false) === false ):
 
 				<tr>
 					<th scope="row"><label for="update_roles"><?php _e('Update User Roles', 'shibboleth') ?></label></th>
-					<td>
+					<td colspan="2">
 						<input type="checkbox" id="update_roles" name="update_roles" <?php echo shibboleth_get_option('shibboleth_update_roles') ? ' checked="checked"' : '' ?> />
 						<label for="update_roles"><?php _e('Use Shibboleth data to update user role mappings each time the user logs in.', 'shibboleth') ?></label>
 
