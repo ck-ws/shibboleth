@@ -26,20 +26,24 @@ if ($shibboleth_plugin_revision === false || SHIBBOLETH_PLUGIN_REVISION != $shib
  * Fastcgi-php friendly getenv() replacement that handles
  * REDIRECT_ environment variables automatically.
  */
-function shibboleth_getenv( $var ) {
+function shibboleth_getenv($var) {
     $var_under = str_replace('-', '_', $var);
     $check_vars = array(
-        $var => TRUE,
-        'REDIRECT_' . $var => TRUE,
-        $var_under => TRUE,
-        'REDIRECT_' . $var_under => TRUE,
+        $var => true,
+        'REDIRECT_' . $var => true,
+        $var_under => true,
+        'REDIRECT_' . $var_under => true,
+        strtoupper($var) => true,
+        strtoupper('REDIRECT_' . $var) => true,
+        strtoupper($var_under) => true,
+        strtoupper('REDIRECT_' . $var_under) => true,
     );
     foreach ($check_vars as $check_var => $true) {
-        if ( ($result = getenv($check_var)) !== FALSE ) {
+        if ( ($result = getenv($check_var)) !== false ) {
             return $result;
         }
     }
-    return FALSE;
+    return false;
 }
 
 /**
