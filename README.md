@@ -1,6 +1,8 @@
 # Shibboleth 2 for WordPress
 
-This is a maintained fork of the [WordPress Shibboleth plugin](http://wordpress.org/plugins/shibboleth), originally by [Will Norris](https://github.com/willnorris) and [Michael 芳貴 Erlewine](https://github.com/mitcho), with contributions from numerous people.
+**This project is no longer maintained! Please use the new fork by Michael McNeill: https://github.com/michaelryanmcneill/shibboleth**
+
+This was a maintained fork of the [WordPress Shibboleth plugin](http://wordpress.org/plugins/shibboleth), originally by [Will Norris](https://github.com/willnorris) and [Michael 芳貴 Erlewine](https://github.com/mitcho), with contributions from numerous people.
 
 Read [readme.txt](readme.txt) for usage information.
 
